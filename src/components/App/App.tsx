@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
-import NoteForm from "../NoteForm /NoteForm";
+import NoteForm from "../NoteForm/NoteForm";
 import SearchBox from "../SearchBox/SearchBox";
 
 export default function App() {
