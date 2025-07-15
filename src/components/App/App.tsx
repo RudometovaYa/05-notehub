@@ -10,16 +10,19 @@ import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
 import SearchBox from "../SearchBox/SearchBox";
+import { useDebounce } from "use-debounce";
 
 export default function App() {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [debouncedQuery] = useDebounce(query, 500);
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", query, currentPage],
-    queryFn: () => fetchNotes(query, currentPage),
-    enabled: query !== "",
+    queryKey: ["notes", debouncedQuery, currentPage],
+    queryFn: () => fetchNotes(debouncedQuery, currentPage),
+    enabled: debouncedQuery !== "",
     placeholderData: keepPreviousData,
   });
 
