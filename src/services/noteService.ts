@@ -17,6 +17,24 @@ export const fetchNotes = async (
   page: number = 1,
   perPage: number = 12
 ): Promise<FetchNotesProps> => {
+  const params: Record<string, string | number> = {
+    page: page.toString(),
+    perPage: perPage.toString(),
+  };
+
+  // Додаємо search тільки якщо він не порожній
+  if (search.trim() !== "") {
+    params.search = search;
+  }
+
+  const response = await axios.get<FetchNotesProps>(`/notes`, {
+    params,
+    headers: { Authorization: `Bearer ${API_TOKEN}` },
+  });
+
+  return response.data;
+};
+/* ): Promise<FetchNotesProps> => {
   const response = await axios.get<FetchNotesProps>(`/notes`, {
     params: {
       search,
@@ -26,7 +44,7 @@ export const fetchNotes = async (
     headers: { Authorization: `Bearer ${API_TOKEN}` },
   });
   return response.data;
-};
+}; */
 
 interface CreateNoteProps {
   title: string;

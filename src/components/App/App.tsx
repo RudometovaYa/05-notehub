@@ -13,16 +13,16 @@ import SearchBox from "../SearchBox/SearchBox";
 import { useDebounce } from "use-debounce";
 
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [query, setQuery] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [debouncedQuery] = useDebounce(query, 500);
+  const [debouncedQuery] = useDebounce<string>(query, 500);
+  const safeQuery = debouncedQuery.trim();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", debouncedQuery, currentPage],
-    queryFn: () => fetchNotes(debouncedQuery, currentPage),
-    enabled: debouncedQuery !== "",
+    queryKey: ["notes", safeQuery, currentPage],
+    queryFn: () => fetchNotes(safeQuery, currentPage),
     placeholderData: keepPreviousData,
   });
 
@@ -47,9 +47,6 @@ export default function App() {
             />
           )}
           <SearchBox onSearch={handleSearch} />
-          {/* Компонент SearchBox */}
-          {/* Пагінація */}
-          {/* Кнопка створення нотатки */}
         </header>
         {isLoading && <Loader />}
         {isError && <ErrorMessage />}
