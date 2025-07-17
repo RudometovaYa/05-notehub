@@ -34,21 +34,11 @@ export const fetchNotes = async (
 
   return response.data;
 };
-/* ): Promise<FetchNotesProps> => {
-  const response = await axios.get<FetchNotesProps>(`/notes`, {
-    params: {
-      search,
-      page,
-      perPage,
-    },
-    headers: { Authorization: `Bearer ${API_TOKEN}` },
-  });
-  return response.data;
-}; */
 
 interface CreateNoteProps {
   title: string;
   content: string;
+  tag: string;
 }
 
 export const createNote = async (noteData: CreateNoteProps): Promise<Note> => {
